@@ -1,15 +1,5 @@
 import arcade
 
-#Constants
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-CYAN = (0, 255, 255)
-BLUE = (0, 0, 255)
-PURPLE = (100, 0, 100)
-PINK = (255, 0, 255)
-
-
 #Window Setup
 window = arcade.Window(1280, 720, "Tutorial")
 
@@ -17,29 +7,31 @@ window = arcade.Window(1280, 720, "Tutorial")
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
+
+        #ShapeElementList
+        self.batch = arcade.shape_list.ShapeElementList()
+
+        #Ellipses
+        ellipse1 = arcade.shape_list.create_ellipse_filled(440, 360, 50 , 50, arcade.color.ROSE)
+        ellipse2 = arcade.shape_list.create_ellipse_outline(640, 360, 50 , 50, arcade.color.RED)
+        ellipse3 = arcade.shape_list.create_ellipse_filled_with_colors(840, 360, 50, 80, arcade.color.RED, arcade.color.BLUE, 45)
+
+        #Triangle
+        triangle = arcade.shape_list.create_polygon(((0, 0), (100, 0), (50, 100)), arcade.color.BLUE)
+
+        #Rectangle
+        rectangle = arcade.shape_list.create_rectangle_filled(100, 360, 100, 150, arcade.color.GREEN)
+
+        self.batch.append(ellipse1)
+        self.batch.append(ellipse2)
+        self.batch.append(ellipse3)
+        self.batch.append(triangle)
+        self.batch.append(rectangle)
+        
     
     def on_draw(self):
         self.clear()
-
-        #Circle
-        arcade.draw_circle_filled(100, 100, 30, arcade.color.RED)
-        arcade.draw_circle_outline(150, 150, 30, RED)
-
-        #Rectangle
-        arcade.draw_lbwh_rectangle_filled(250, 250, 100, 100, PURPLE)
-        arcade.draw_lbwh_rectangle_outline(250, 50, 100, 100, BLUE)
-
-        arcade.draw_lbwh_rectangle_filled(200, 200, 100, 100, BLUE)
-
-        #Arc
-        arcade.draw_arc_filled(500, 300, 100, 100, GREEN, 0, 90)
-        arcade.draw_arc_outline(550, 350, 100, 100, GREEN, 0, 90)
-
-        #Parabola
-        arcade.draw_parabola_filled(250, 450, 300, 100, PINK)
-
-        #Line
-        arcade.draw_line(600, 600, 800, 650, CYAN, 2)
+        self.batch.draw()
 
 #Running Game
 game = GameView()
